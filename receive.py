@@ -33,13 +33,18 @@ channel.queue_declare(queue='MyMQ')
 # ########################################## Setting up Deduplicate DB
 message_cache = {}
 
+# ########################################## Setting up Notification Template
+title_template = "Notification from: {} Subject: {}"
+body_template = "{}"
+
 # ########################################## Setting up Message queue call back
 def callback(ch, method, properties, body):
     json_str = body.decode('UTF-8')
     data = json.loads(str(json_str))
     # If data is valid
     if data and data["to"][0]["user_id"] and data["from"]["email"] and data["subject"] and data["content"]:
-        success = myappriser.notify(title=data["subject"] + " from " + data["from"]["email"], body=data["content"], tag=str(data["to"][0]["user_id"]))
+        # Notification template
+        success = myappriser.notify(title=title_template.format(data["from"]["email"], data["subject"]), body=body_template.format(data["content"]), tag=str(data["to"][0]["user_id"]))
         if success:
             print("Successfully notified user")
             # Logging

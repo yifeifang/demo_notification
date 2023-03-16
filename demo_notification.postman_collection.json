@@ -18,7 +18,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"to\":[\r\n        {\r\n            \"user_id\": 724517549\r\n        }\r\n    ],\r\n    \"from\":{\r\n        \"email\": \"Alice@alice.com\"\r\n    },\r\n    \"subject\":\"Notification\",\r\n    \"content\":\"Hello World\"\r\n}",
+					"raw": "{\r\n    \"to\":[\r\n        {\r\n            \"user_id\": 724517549\r\n        }\r\n    ],\r\n    \"from\":{\r\n        \"email\": \"Alice@alice.com\"\r\n    },\r\n    \"subject\":\"System Design Demo\",\r\n    \"content\":\"Hello World\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
