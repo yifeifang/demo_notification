@@ -3,6 +3,7 @@ from flask import Flask, request
 import json
 import requests
 import pika
+import time
 
 # ########################################## Setting up Notification Server
 
@@ -15,12 +16,24 @@ connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', hear
 channel = connection.channel()
 channel.queue_declare(queue='MyMQ')
 
+# ########################################## Setting up Rate limiter
+rate_limiter = {}
+
 # Define a route for the API
 @app.route("/notify", methods=["POST"])
 def notify():
+    json_str = json.dumps(request.json)
+    if json_str in rate_limiter:
+        # Calculate delta since last message
+        delta = time.time() - rate_limiter[json_str]
+        # If more then 1 same message in 5 second deny it
+        if delta < 5:
+            return "Failed: Notifing too frequently. Retry after 5 seconds"
+    
     channel.basic_publish(exchange='',
-                      routing_key='MyMQ',
-                      body=json.dumps(request.json))
+                        routing_key='MyMQ',
+                        body=json_str)
+    rate_limiter[json_str] = time.time()
     return "Success"
 
 # Run the app
