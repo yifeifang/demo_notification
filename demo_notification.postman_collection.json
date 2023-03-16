@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "584aa7ef-f199-406b-93b6-123bed5fed90",
+		"name": "demo_notification",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"to\":[\r\n        {\r\n            \"user_id\": 724517549\r\n        }\r\n    ],\r\n    \"from\":{\r\n        \"email\": \"Alice@alice.com\"\r\n    },\r\n    \"subject\":\"Notification\",\r\n    \"content\":\"Hello World\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/notify",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"notify"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
