@@ -21,7 +21,7 @@ signal.signal(signal.SIGINT, signal_handler)
 # Create an appriser object
 myappriser = apprise.Apprise()
 # Cached user info. This can be load from a file
-myappriser.add('tgram://6276019144:AAHdcw7ifMpg1K_ZbBw0Faj5LLGWswfnsj8/724517549', tag='724517549')
+myappriser.add('tgram://xxxxxxxxxxxxxxxxxxxxxxxx', tag='724517549')
 
 # ########################################## Setting up Message Queue
 # Connect to rabbit MQ
