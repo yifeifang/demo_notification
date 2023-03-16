@@ -1,0 +1,27 @@
+title Notification System
+
+note over PostMan: User Input
+note over FlaskServer: Init RabbitMQ Connection
+note over FlaskServer: Setup Rate Limiter 
+PostMan->FlaskServer: Http request (JSon)
+note over FlaskServer: Check if the request is too frequent
+alt Success
+FlaskServer->PostMan: Success
+else Fail
+FlaskServer->PostMan: Fail: Sending too fast
+end
+FlaskServer->RabbitMQ: Put Json str in MQ
+note over Worker: Setup Logging System
+note over Worker: Setup Apprise
+note over Worker: Setup deduplicate DB
+RabbitMQ->Worker: Pull Json str
+note over Worker: Deduplicate
+Worker->Apprise: Try send notification
+alt Success
+    Apprise->Worker: Success
+    Apprise->TelegramBot: Notification
+else Fail
+    Apprise->Worker: Fail
+    Worker->RabbitMQ: Push Same Json str for retry
+end
+
